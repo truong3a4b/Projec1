@@ -1,0 +1,64 @@
+.rootPane{
+    -fx-background-color: #212121;
+}
+
+.button.selected{
+    -fx-background-color: transparent;
+    -fx-border-color: blue;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: blue;
+}
+.nav_button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+.nav_button:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: blue;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: blue;
+}
+.nav_button:hover{
+    -fx-cursor: hand;
+    -fx-border-color: #BDC6C8;
+    -fx-border-width: 0 0 1 0;
+}
+.nav_button:focused:hover{
+    -fx-cursor: hand;
+    -fx-border-color: blue;
+    -fx-border-width: 0 0 2 0;
+}
+
+.scan_button {
+    -fx-background-color: transparent;
+    -fx-border-width: 2 2 2 2 ;
+    -fx-border-color: gray;
+    -fx-text-fill: #35B5F2;
+    -fx-border-radius: 5;
+    -fx-padding: 5 20 5 20;
+}
+.scan_button:hover{
+    -fx-background-color: #35B5F2;
+    -fx-text-fill: white;
+    -fx-border-width: 0 0 0 0 ;
+    -fx-cursor: hand;
+}
+
+.url_input {
+    -fx-background-color: transparent;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: #A2B6E2;
+    -fx-text-fill: white;
+}
+.url_input:focused {
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: #86AAF9;
+}
+.url_input:hover {
+    -fx-border-color: white;
+}
+.url_input:focused:hover {
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: #86AAF9;
+}
