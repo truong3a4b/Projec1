@@ -12,7 +12,7 @@ public class ApiClass {
 
     public static void main(String[] args) {
         ScanVirus scanVirus = new ScanVirus(API_KEY);
-        scanVirus.scanURL("https://chatgpt.com/c/673f3ffe-3ea4-800e-9daf-82ec069bb6ef");
+        scanVirus.scanURL("https://chatgpt.com");
         List<Report> reports = scanVirus.getReports();
         for(Report report : reports){
             System.out.println(report.getName() + ": " + report.getResult());

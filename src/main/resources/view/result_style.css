@@ -1,0 +1,28 @@
+.rootPane{
+    -fx-background-color: #212121;
+
+}
+.scroll-pane{
+    -fx-background-color: #212121;
+}
+.title {
+    -fx-font-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #3D4A69;
+}
+.label.result {
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-max-height: 50;
+    -fx-max-width: 220;
+    -fx-alignment: center-left;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #3D4A69;
+    -fx-padding: 0 0 0 10;
+}
+.label.space {
+    -fx-pref-height: 50;
+    -fx-pref-tile-width: 50;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #3D4A69;
+}
