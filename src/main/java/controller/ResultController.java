@@ -1,14 +1,18 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+
 import javafx.stage.Stage;
 import model.Report;
-import scan_virus.ScanVirus;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -62,5 +66,23 @@ public class ResultController implements Initializable {
         if(reports != null){
             setTableAnalys();
         }
+    }
+
+    public void returnHome(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/home.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        MainController controller = loader.getController();
+        controller.setStage(stage);
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/view/home_style.css").toExternalForm());
+        stage.setScene(scene);
+
     }
 }

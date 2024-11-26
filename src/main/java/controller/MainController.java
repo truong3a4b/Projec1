@@ -7,9 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Report;
@@ -23,30 +21,46 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private static final String API_KEY = "66e79ad2fb6a04e4a58649327d1e4d725496123209810be4548c466a449ef0ca";
     private Stage stage;
+    private int flagBtn;
+    private UrlController urlController;
     @FXML
-    Pane contentArea;
+    private Pane contentArea;
     @FXML
-    Button filebtn, urlbtn, searchbtn,scanbtn;
+    private Button filebtn, urlbtn, searchbtn,scanbtn;
+    @FXML
+    private Label scanningLabel;
+    @FXML
+    private ProgressIndicator loadingCircle;
 
+
+    @FXML
+    private TextField searchBar;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        loadFileComponent();
+        scanningLabel.setVisible(false);
+        loadingCircle.setVisible(false);
     }
     public void loadUrlComponent(){
         loadComponent("/view/url_component.fxml");
+        this.flagBtn = 2;
         urlbtn.getStyleClass().add("selected");
         searchbtn.getStyleClass().remove("selected");
         filebtn.getStyleClass().remove("selected");
+
     }
 
     public void loadFileComponent(){
         loadComponent("/view/file_component.fxml");
+        this.flagBtn=1;
         filebtn.getStyleClass().add("selected");
         searchbtn.getStyleClass().remove("selected");
         urlbtn.getStyleClass().remove("selected");
+
     }
 
     public void loadSearchComponent(){
+        this.flagBtn=3;
         loadComponent("/view/search_component.fxml");
         searchbtn.getStyleClass().add("selected");
         filebtn.getStyleClass().remove("selected");
@@ -56,8 +70,11 @@ public class MainController implements Initializable {
     public void loadComponent(String fileFXML){
         try {
             contentArea.getChildren().clear();
-            Node page = FXMLLoader.load(getClass().getResource(fileFXML));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fileFXML));
+            Node page = loader.load();
             contentArea.getChildren().setAll(page);
+            if(flagBtn == 1) this.urlController = loader.getController();
+
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -68,17 +85,26 @@ public class MainController implements Initializable {
     }
 
     public void goToResult() throws Exception{
-        Label statusLabel = new Label("Scanning");
-        contentArea.getChildren().add(statusLabel);
+
         scanbtn.setDisable(true);
+        scanningLabel.setVisible(true);
+        loadingCircle.setVisible(true);
+
+
 
         ScanVirus scanVirus = new ScanVirus(API_KEY);
         Task<Void> scanTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 long startTime = System.currentTimeMillis();
-                scanVirus.scanURL("https://outlawseafood.com/");
-                Thread.sleep(5000);
+
+                if(flagBtn == 2){
+                    String url = urlController.getUrl();
+                    System.out.println(url);
+                    scanVirus.scanURL(url);
+                }
+
+                Thread.sleep(8000);
                 long endTime = System.currentTimeMillis();
                 long duration = endTime - startTime;
                 updateMessage("Scan completed in " + duration + " ms");
@@ -86,10 +112,11 @@ public class MainController implements Initializable {
             }
         };
 
+        System.out.println(flagBtn);
         scanTask.setOnSucceeded(e -> {
-            statusLabel.setText(scanTask.getMessage());
             scanbtn.setDisable(false);
-
+            scanningLabel.setText("Scan Success");
+            loadingCircle.setVisible(false);
             List<Report> reports = scanVirus.getReports();
             for(Report re : reports){
                 System.out.println(re.getName());
@@ -111,20 +138,20 @@ public class MainController implements Initializable {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/view/result_style.css").toExternalForm());
             stage.setScene(scene);
-
+            System.out.println(flagBtn);
         });
 
         scanTask.setOnFailed(e -> {
-            statusLabel.setText("Status: Scan failed.");
             scanbtn.setDisable(false);
-
+            scanningLabel.setText("Scan Fail!");
+            loadingCircle.setVisible(false);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Scan Failed");
             alert.setContentText("An error occurred while scanning.");
             alert.showAndWait();
         });
-
+        System.out.println(flagBtn);
         Thread thread = new Thread(scanTask);
         thread.setDaemon(true);
         thread.start();

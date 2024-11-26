@@ -13,12 +13,12 @@
     -fx-border-color: transparent;
     -fx-text-fill: white;
 }
-.nav_button:focused {
-    -fx-background-color: transparent;
-    -fx-border-color: blue;
-    -fx-border-width: 0 0 2 0;
-    -fx-text-fill: blue;
-}
+/*.nav_button:focused {*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-border-color: blue;*/
+/*    -fx-border-width: 0 0 2 0;*/
+/*    -fx-text-fill: blue;*/
+/*}*/
 .nav_button:hover{
     -fx-cursor: hand;
     -fx-border-color: #BDC6C8;

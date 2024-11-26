@@ -26,3 +26,19 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #3D4A69;
 }
+
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+.button:hover {
+    -fx-cursor: hand;
+    -fx-border-color: #3599EF;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(185, 190, 200, 0.1), 10, 1, 0, 1);
+    -fx-text-fill: #3599EF;
+}
+.nav_bar{
+    -fx-background-color: #232C42;
+    -fx-background-radius: 10;
+}
