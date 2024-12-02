@@ -31,7 +31,12 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
 }
-.button:hover {
+.button_2:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #43454A;
+    -fx-background-radius: 10;
+}
+.button_1:hover {
     -fx-cursor: hand;
     -fx-border-color: #3599EF;
     -fx-border-width: 0 0 1 0;

@@ -8,11 +8,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.Report;
+import model.ResultAnalysis;
 import scan_virus.ScanVirus;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -23,8 +25,10 @@ public class MainController implements Initializable {
     private Stage stage;
     private int flagBtn;
     private UrlController urlController;
+    private FileController fileController;
+    private SearchController searchController;
     @FXML
-    private Pane contentArea;
+    private HBox contentArea;
     @FXML
     private Button filebtn, urlbtn, searchbtn,scanbtn;
     @FXML
@@ -37,13 +41,14 @@ public class MainController implements Initializable {
     private TextField searchBar;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.flagBtn = 1;
         loadFileComponent();
         scanningLabel.setVisible(false);
         loadingCircle.setVisible(false);
     }
     public void loadUrlComponent(){
-        loadComponent("/view/url_component.fxml");
         this.flagBtn = 2;
+        loadComponent("/view/url_component.fxml");
         urlbtn.getStyleClass().add("selected");
         searchbtn.getStyleClass().remove("selected");
         filebtn.getStyleClass().remove("selected");
@@ -51,8 +56,8 @@ public class MainController implements Initializable {
     }
 
     public void loadFileComponent(){
-        loadComponent("/view/file_component.fxml");
         this.flagBtn=1;
+        loadComponent("/view/file_component.fxml");
         filebtn.getStyleClass().add("selected");
         searchbtn.getStyleClass().remove("selected");
         urlbtn.getStyleClass().remove("selected");
@@ -73,7 +78,9 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fileFXML));
             Node page = loader.load();
             contentArea.getChildren().setAll(page);
-            if(flagBtn == 1) this.urlController = loader.getController();
+            if(flagBtn == 2) this.urlController = loader.getController();
+            if(flagBtn == 1) this.fileController = loader.getController();
+            if(flagBtn == 3) this.searchController=loader.getController();
 
         }catch (IOException e){
             e.printStackTrace();
@@ -89,7 +96,7 @@ public class MainController implements Initializable {
         scanbtn.setDisable(true);
         scanningLabel.setVisible(true);
         loadingCircle.setVisible(true);
-
+        scanningLabel.setText("Scanning");
 
 
         ScanVirus scanVirus = new ScanVirus(API_KEY);
@@ -97,6 +104,15 @@ public class MainController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 long startTime = System.currentTimeMillis();
+                filebtn.setDisable(true);
+                urlbtn.setDisable(true);
+                searchbtn.setDisable(true);
+
+                if(flagBtn == 1){
+                    File file = fileController.getSelectedFile();
+                    System.out.println(file.getName());
+                    scanVirus.scanFile(file);
+                }
 
                 if(flagBtn == 2){
                     String url = urlController.getUrl();
@@ -104,7 +120,22 @@ public class MainController implements Initializable {
                     scanVirus.scanURL(url);
                 }
 
-                Thread.sleep(8000);
+                if(flagBtn == 3){
+                    String input = searchController.getUrl();
+                    System.out.println(input);
+                    scanVirus.scanIpAndDomain(input);
+                }
+
+                int timeLimit = 30;
+                while (scanVirus.getReports().getResults().size() == 0){
+                    Thread.sleep(1000);
+                    System.out.println("+1s");
+                    timeLimit--;
+                    if(timeLimit == 0){
+                        throw new Exception("Time limit");
+                    }
+                }
+
                 long endTime = System.currentTimeMillis();
                 long duration = endTime - startTime;
                 updateMessage("Scan completed in " + duration + " ms");
@@ -113,12 +144,13 @@ public class MainController implements Initializable {
         };
 
         System.out.println(flagBtn);
+
         scanTask.setOnSucceeded(e -> {
             scanbtn.setDisable(false);
             scanningLabel.setText("Scan Success");
             loadingCircle.setVisible(false);
-            List<Report> reports = scanVirus.getReports();
-            for(Report re : reports){
+            List<ResultAnalysis> resultAnalyses = scanVirus.getReports().getResults();
+            for(ResultAnalysis re : resultAnalyses){
                 System.out.println(re.getName());
             }
 
@@ -132,8 +164,20 @@ public class MainController implements Initializable {
             }
 
             ResultController controller = loader.getController();
-            controller.setReports(reports);
+            controller.setReport(scanVirus.getReports());
             controller.setStage(stage);
+            if(flagBtn == 2) {
+                controller.setNameLabel(urlController.getUrl());
+
+            }
+            if(flagBtn == 1) {
+                controller.setNameLabel(fileController.getSelectedFile().getName());
+
+            }
+            if(flagBtn == 3) {
+                controller.setNameLabel(searchController.getUrl());
+
+            }
 
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/view/result_style.css").toExternalForm());
@@ -142,13 +186,18 @@ public class MainController implements Initializable {
         });
 
         scanTask.setOnFailed(e -> {
+            filebtn.setDisable(false);
+            urlbtn.setDisable(false);
+            searchbtn.setDisable(false);
             scanbtn.setDisable(false);
             scanningLabel.setText("Scan Fail!");
             loadingCircle.setVisible(false);
+
+            Throwable exception = scanTask.getException();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Scan Failed");
-            alert.setContentText("An error occurred while scanning.");
+            alert.setContentText(exception.getMessage());
             alert.showAndWait();
         });
         System.out.println(flagBtn);
@@ -157,5 +206,7 @@ public class MainController implements Initializable {
         thread.start();
     }
 
-
+    public void setFlagBtn(int k){
+        this.flagBtn = k;
+    }
 }

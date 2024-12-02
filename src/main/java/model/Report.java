@@ -1,63 +1,54 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Report {
-    private String name, method, engine_name, category, result;
+    private String id;
+    private String type;
+    private Stats stats;
+    private List<ResultAnalysis> results;
 
-    public Report(String name, String method, String engine_name, String category, String result) {
-        this.name = name;
-        this.method = method;
-        this.engine_name = engine_name;
-        this.category = category;
-        this.result = result;
+    public Report(String id, String type, Stats stats, List<ResultAnalysis> results) {
+        this.id = id;
+        this.type = type;
+        this.stats = stats;
+        this.results = results;
+    }
+    public Report(){
+        results = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getMethod() {
-        return method;
+    public String getType() {
+        return type;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getEngine_name() {
-        return engine_name;
+    public Stats getStats() {
+        return stats;
     }
 
-    public void setEngine_name(String engine_name) {
-        this.engine_name = engine_name;
+    public void setStats(Stats stats) {
+        this.stats = stats;
     }
 
-    public String getCategory() {
-        return category;
+    public List<ResultAnalysis> getResults() {
+        return results;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public void printReport() {
-        System.out.println(
-                "name='" + name + '\'' +
-                ", method='" + method + '\'' +
-                ", engine_name='" + engine_name + '\'' +
-                ", categorry='" + category + '\'' +
-                ", result='" + result
-        );
+    public void setResults(List<ResultAnalysis> results) {
+        this.results = results;
     }
 }
