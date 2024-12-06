@@ -86,8 +86,8 @@ public class JsonProcess {
             JsonNode result = resultsNode.get(fieldName);
 
             String name = fieldName;
-            String method = resultsNode.path("method").asText();
-            String engineName = resultsNode.path("engine_name").asText();
+            String method = result.path("method").asText();
+            String engineName = result.path("engine_name").asText();
             String category = result.path("category").asText();
             String resultText = result.path("result").asText();
             resultAnalysisList.add(new ResultAnalysis(name,method,engineName,category,resultText));

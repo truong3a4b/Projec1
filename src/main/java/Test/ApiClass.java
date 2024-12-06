@@ -17,7 +17,7 @@ public class ApiClass {
         }
         Report reports = scanVirus.getReports();
         model.ExcelExporter excelExporter = new ExcelExporter();
-        excelExporter.exportReportToExcel(reports, "test4.xlsx");
+        excelExporter.exportReportToExcel(reports, "D:/Work/test4.xlsx");
 //        for(Report report : reports){
 //            System.out.println(report.getName() + ": " + report.getResult());
 //        }
