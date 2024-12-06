@@ -54,6 +54,8 @@ public class ResultController implements Initializable {
         results = FXCollections.observableArrayList(report.getResults());
         int row = results.size()/2;
         for(int i = 0; i < row; i++){
+            System.out.println("Method: " + results.get(i*2).getMethod());
+            System.out.println("Method: " + results.get(i*2+1).getMethod());
 
             Label nameLabel1 = new Label(results.get(i*2).getName());
             nameLabel1.getStyleClass().add("result");

@@ -78,3 +78,9 @@
     -fx-text-fill: white;
     -fx-background-radius: 20;
 }
+
+.button_history:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #43454A;
+    -fx-background-radius: 10;
+}

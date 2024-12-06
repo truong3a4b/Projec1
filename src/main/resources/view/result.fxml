@@ -97,7 +97,7 @@
                </padding>
             </VBox>
             <Line endX="-99.10712432861328" endY="599.2929077148438" startX="-100.0" stroke="#8c7c7c" strokeWidth="2.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="800.0">
+            <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0">
                <children>
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="800.0">
                      <children>

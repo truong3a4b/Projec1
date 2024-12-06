@@ -110,6 +110,12 @@ public class ScanVirus {
                 // Lấy ID phân tích từ phản hồi JSON và in ra
                 String id = jsonProcess.getIdFromRespond(response.body().string());
                 System.out.println("ID: " + id);
+                try {
+                    Thread.sleep(7000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 checkScanResult(id);  // Gọi phương thức để kiểm tra kết quả phân tích
             } else {
                 String errorMesseage = "Request scan failed: " + response.code() + " " + response.message();

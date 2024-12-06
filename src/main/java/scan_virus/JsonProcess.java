@@ -85,9 +85,11 @@ public class JsonProcess {
             String fieldName = fieldNames.next();
             JsonNode result = resultsNode.get(fieldName);
 
+
+
             String name = fieldName;
-            String method = resultsNode.path("method").asText();
-            String engineName = resultsNode.path("engine_name").asText();
+            String method = result.path("method").asText();
+            String engineName = result.path("engine_name").asText();
             String category = result.path("category").asText();
             String resultText = result.path("result").asText();
             resultAnalysisList.add(new ResultAnalysis(name,method,engineName,category,resultText));
@@ -100,5 +102,16 @@ public class JsonProcess {
         int malicious = statsNode.path("malicious").asInt();
         Stats stats = new Stats(malicious);
         return stats;
+    }
+
+
+    //Ghi vao file json những report da tra
+    public void writeToHistoty(){
+
+    }
+
+    public List<Report> getHistoryFromJson(){
+        List<Report> reports = new ArrayList<>();
+        return reports;
     }
 }

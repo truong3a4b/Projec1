@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +9,14 @@ public class Report {
     private String type;
     private Stats stats;
     private List<ResultAnalysis> results;
+    private LocalDate time;
 
     public Report(String id, String type, Stats stats, List<ResultAnalysis> results) {
         this.id = id;
         this.type = type;
         this.stats = stats;
         this.results = results;
+        this.time = LocalDate.now();
     }
     public Report(){
         results = new ArrayList<>();
@@ -50,5 +53,8 @@ public class Report {
 
     public void setResults(List<ResultAnalysis> results) {
         this.results = results;
+    }
+    public LocalDate getTime(){
+        return time;
     }
 }

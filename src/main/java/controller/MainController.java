@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.ResultAnalysis;
 import scan_virus.ScanVirus;
@@ -24,9 +23,11 @@ public class MainController implements Initializable {
     private static final String API_KEY = "66e79ad2fb6a04e4a58649327d1e4d725496123209810be4548c466a449ef0ca";
     private Stage stage;
     private int flagBtn;
+    private boolean flagScan;
     private UrlController urlController;
     private FileController fileController;
     private SearchController searchController;
+    Task<Void> scanTask;
     @FXML
     private HBox contentArea;
     @FXML
@@ -42,6 +43,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.flagBtn = 1;
+        this.flagScan = false;
         loadFileComponent();
         scanningLabel.setVisible(false);
         loadingCircle.setVisible(false);
@@ -93,14 +95,13 @@ public class MainController implements Initializable {
 
     public void goToResult() throws Exception{
 
-        scanbtn.setDisable(true);
-        scanningLabel.setVisible(true);
-        loadingCircle.setVisible(true);
-        scanningLabel.setText("Scanning");
-
-
-        ScanVirus scanVirus = new ScanVirus(API_KEY);
-        Task<Void> scanTask = new Task<Void>() {
+        if(scanTask == null || scanTask.isCancelled() ||  scanTask.isDone()){
+            scanbtn.setText("Cancel");
+            scanningLabel.setVisible(true);
+            loadingCircle.setVisible(true);
+            scanningLabel.setText("Scanning");
+            ScanVirus scanVirus = new ScanVirus(API_KEY);
+            scanTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 long startTime = System.currentTimeMillis();
@@ -108,30 +109,30 @@ public class MainController implements Initializable {
                 urlbtn.setDisable(true);
                 searchbtn.setDisable(true);
 
-                if(flagBtn == 1){
+                if (flagBtn == 1) {
                     File file = fileController.getSelectedFile();
                     System.out.println(file.getName());
                     scanVirus.scanFile(file);
                 }
 
-                if(flagBtn == 2){
+                if (flagBtn == 2) {
                     String url = urlController.getUrl();
                     System.out.println(url);
                     scanVirus.scanURL(url);
                 }
 
-                if(flagBtn == 3){
+                if (flagBtn == 3) {
                     String input = searchController.getUrl();
                     System.out.println(input);
                     scanVirus.scanIpAndDomain(input);
                 }
 
-                int timeLimit = 30;
-                while (scanVirus.getReports().getResults().size() == 0){
+                int timeLimit = 60;
+                while (scanVirus.getReports().getResults().size() == 0) {
                     Thread.sleep(1000);
                     System.out.println("+1s");
                     timeLimit--;
-                    if(timeLimit == 0){
+                    if (timeLimit == 0) {
                         throw new Exception("Time limit");
                     }
                 }
@@ -141,69 +142,83 @@ public class MainController implements Initializable {
                 updateMessage("Scan completed in " + duration + " ms");
                 return null;
             }
-        };
+            };
 
-        System.out.println(flagBtn);
-
-        scanTask.setOnSucceeded(e -> {
-            scanbtn.setDisable(false);
-            scanningLabel.setText("Scan Success");
-            loadingCircle.setVisible(false);
-            List<ResultAnalysis> resultAnalyses = scanVirus.getReports().getResults();
-            for(ResultAnalysis re : resultAnalyses){
-                System.out.println(re.getName());
-            }
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/result.fxml"));
-            Parent root;
-            try {
-                root = loader.load();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            ResultController controller = loader.getController();
-            controller.setReport(scanVirus.getReports());
-            controller.setStage(stage);
-            if(flagBtn == 2) {
-                controller.setNameLabel(urlController.getUrl());
-
-            }
-            if(flagBtn == 1) {
-                controller.setNameLabel(fileController.getSelectedFile().getName());
-
-            }
-            if(flagBtn == 3) {
-                controller.setNameLabel(searchController.getUrl());
-
-            }
-
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/view/result_style.css").toExternalForm());
-            stage.setScene(scene);
             System.out.println(flagBtn);
-        });
 
-        scanTask.setOnFailed(e -> {
+            scanTask.setOnSucceeded(e -> {
+                scanbtn.setDisable(false);
+                scanningLabel.setText("Scan Success");
+                loadingCircle.setVisible(false);
+                List<ResultAnalysis> resultAnalyses = scanVirus.getReports().getResults();
+                for (ResultAnalysis re : resultAnalyses) {
+                    System.out.println(re.getName());
+                }
+
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/result.fxml"));
+                Parent root;
+                try {
+                    root = loader.load();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                ResultController controller = loader.getController();
+                controller.setReport(scanVirus.getReports());
+                controller.setStage(stage);
+                if (flagBtn == 2) {
+                    controller.setNameLabel(urlController.getUrl());
+
+                }
+                if (flagBtn == 1) {
+                    controller.setNameLabel(fileController.getSelectedFile().getName());
+
+                }
+                if (flagBtn == 3) {
+                    controller.setNameLabel(searchController.getUrl());
+
+                }
+
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("/view/result_style.css").toExternalForm());
+                stage.setScene(scene);
+                System.out.println(flagBtn);
+            });
+
+            scanTask.setOnFailed(e -> {
+                filebtn.setDisable(false);
+                urlbtn.setDisable(false);
+                searchbtn.setDisable(false);
+                scanbtn.setDisable(false);
+                scanningLabel.setText("Scan Fail!");
+                loadingCircle.setVisible(false);
+
+                Throwable exception = scanTask.getException();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Scan Failed");
+                alert.setContentText(exception.getMessage());
+                alert.showAndWait();
+            });
+            Thread thread = new Thread(scanTask);
+            thread.setDaemon(true);
+            thread.start();
+        }else {
+            scanTask.cancel();
+
+            scanbtn.setText("Scan");
+            scanningLabel.setVisible(false);
+            loadingCircle.setVisible(false);
+
             filebtn.setDisable(false);
             urlbtn.setDisable(false);
             searchbtn.setDisable(false);
-            scanbtn.setDisable(false);
-            scanningLabel.setText("Scan Fail!");
-            loadingCircle.setVisible(false);
-
-            Throwable exception = scanTask.getException();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Scan Failed");
-            alert.setContentText(exception.getMessage());
-            alert.showAndWait();
-        });
+        }
         System.out.println(flagBtn);
-        Thread thread = new Thread(scanTask);
-        thread.setDaemon(true);
-        thread.start();
+
+
+
     }
 
     public void setFlagBtn(int k){
