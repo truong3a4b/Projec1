@@ -81,7 +81,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Application.ApiClass">
     <configuration name="ApiClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test.ApiClass" />
       <module name="VirusTotal" />
@@ -138,10 +138,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ApiClass" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.RingProgressWithColor" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.ApiClass" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
