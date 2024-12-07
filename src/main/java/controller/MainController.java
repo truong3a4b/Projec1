@@ -32,7 +32,7 @@ public class MainController implements Initializable {
     @FXML
     private HBox contentArea;
     @FXML
-    private Button filebtn, urlbtn, searchbtn,scanbtn,homeBtn, historyBtn;
+    private Button filebtn, urlbtn, searchbtn,scanbtn;
     @FXML
     private Label scanningLabel;
     @FXML
@@ -41,8 +41,7 @@ public class MainController implements Initializable {
     private VBox mainView;
 
 
-    @FXML
-    private TextField searchBar;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.flagBtn = 1;
@@ -248,7 +247,10 @@ public class MainController implements Initializable {
         try {
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/home.fxml"));
+            Parent root = loader.load();
+            MainController controller = loader.getController();
+            controller.setStage(stage);
 
             stage.setScene(new Scene(root));
         } catch (IOException e) {
