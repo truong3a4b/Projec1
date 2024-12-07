@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.ResultAnalysis;
 import scan_virus.ScanVirus;
@@ -23,7 +25,6 @@ public class MainController implements Initializable {
     private static final String API_KEY = "66e79ad2fb6a04e4a58649327d1e4d725496123209810be4548c466a449ef0ca";
     private Stage stage;
     private int flagBtn;
-    private boolean flagScan;
     private UrlController urlController;
     private FileController fileController;
     private SearchController searchController;
@@ -31,11 +32,13 @@ public class MainController implements Initializable {
     @FXML
     private HBox contentArea;
     @FXML
-    private Button filebtn, urlbtn, searchbtn,scanbtn;
+    private Button filebtn, urlbtn, searchbtn,scanbtn,homeBtn, historyBtn;
     @FXML
     private Label scanningLabel;
     @FXML
     private ProgressIndicator loadingCircle;
+    @FXML
+    private VBox mainView;
 
 
     @FXML
@@ -43,10 +46,10 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.flagBtn = 1;
-        this.flagScan = false;
         loadFileComponent();
         scanningLabel.setVisible(false);
         loadingCircle.setVisible(false);
+        if(stage == null) stage = new Stage();
     }
     public void loadUrlComponent(){
         this.flagBtn = 2;
@@ -168,15 +171,18 @@ public class MainController implements Initializable {
                 controller.setReport(scanVirus.getReports());
                 controller.setStage(stage);
                 if (flagBtn == 2) {
-                    controller.setNameLabel(urlController.getUrl());
+                    String name = urlController.getUrl();
+                    controller.setNameLabel(name);
 
                 }
                 if (flagBtn == 1) {
-                    controller.setNameLabel(fileController.getSelectedFile().getName());
+                    String name = fileController.getSelectedFile().getName();
+                    controller.setNameLabel(name);
 
                 }
                 if (flagBtn == 3) {
-                    controller.setNameLabel(searchController.getUrl());
+                    String name = searchController.getUrl();
+                    controller.setNameLabel(name);
 
                 }
 
@@ -195,6 +201,7 @@ public class MainController implements Initializable {
                 loadingCircle.setVisible(false);
 
                 Throwable exception = scanTask.getException();
+                exception.printStackTrace();
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Scan Failed");
@@ -221,7 +228,31 @@ public class MainController implements Initializable {
 
     }
 
-    public void setFlagBtn(int k){
-        this.flagBtn = k;
+    public void loadHistory(){
+        mainView.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/history.fxml"));
+        Node root;
+        try {
+            root = loader.load();
+            HistoryController hisController = loader.getController();
+            hisController.createTable();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        mainView.getChildren().add(root);
+
+    }
+
+    public void reloadHome(ActionEvent event){
+        try {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/home.fxml"));
+
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

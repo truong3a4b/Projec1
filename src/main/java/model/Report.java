@@ -1,25 +1,46 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
+    @JsonIgnore
     private String id;
+    private String name;
+
+    @JsonIgnore
     private String type;
+    @JsonIgnore
     private Stats stats;
+    @JsonIgnore
     private List<ResultAnalysis> results;
-    private LocalDate time;
+    private String time;
 
     public Report(String id, String type, Stats stats, List<ResultAnalysis> results) {
         this.id = id;
         this.type = type;
         this.stats = stats;
         this.results = results;
-        this.time = LocalDate.now();
+
+        LocalDateTime now = LocalDateTime.now();
+        this.time = now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
     }
     public Report(){
         results = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -54,7 +75,7 @@ public class Report {
     public void setResults(List<ResultAnalysis> results) {
         this.results = results;
     }
-    public LocalDate getTime(){
+    public String getTime(){
         return time;
     }
 }

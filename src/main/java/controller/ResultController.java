@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -15,9 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Report;
 import model.ResultAnalysis;
+import scan_virus.ApiRequestException;
+import scan_virus.ExcelExporter;
 import scan_virus.ScanVirus;
 
 
@@ -32,6 +37,7 @@ public class ResultController implements Initializable {
     private Stage stage;
     private Report report;
     private ObservableList<ResultAnalysis> results;
+    private ExcelExporter excelExporter;
 
     @FXML
     private GridPane tableAnalys;
@@ -45,8 +51,7 @@ public class ResultController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
+        excelExporter = new ExcelExporter();
     }
 
     public void setTableAnalys(){
@@ -54,8 +59,6 @@ public class ResultController implements Initializable {
         results = FXCollections.observableArrayList(report.getResults());
         int row = results.size()/2;
         for(int i = 0; i < row; i++){
-            System.out.println("Method: " + results.get(i*2).getMethod());
-            System.out.println("Method: " + results.get(i*2+1).getMethod());
 
             Label nameLabel1 = new Label(results.get(i*2).getName());
             nameLabel1.getStyleClass().add("result");
@@ -143,5 +146,42 @@ public class ResultController implements Initializable {
         nameLabel.setText(name);
     }
 
+    public void exportExcel(){
+        Stage folderChooserStage = new Stage();
+        folderChooserStage.setTitle("File Explorer");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select folder");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xlsx (*.xlsx)", "*.xlsx"));
+
+        File file = fileChooser.showSaveDialog(folderChooserStage);
+
+        if (file != null) {
+            try {
+                if (file.createNewFile()) {
+                    excelExporter.exportReportToExcel(report,file.getAbsolutePath());
+                    showAlert(AlertType.INFORMATION, "Success", "File has been saved at:  " + file.getAbsolutePath());
+                } else {
+
+                    showAlert(AlertType.WARNING, "WARN", "File already exists!");
+                }
+            }catch (IOException e){
+                showAlert(AlertType.ERROR, "ERROR", "Can't save file: " + e.getMessage());
+            }
+
+        } else {
+            System.out.println("Người dùng đã hủy.");
+        }
+
+        folderChooserStage.close();
+
+    }
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }

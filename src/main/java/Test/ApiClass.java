@@ -1,6 +1,6 @@
 package Test;
 
-import model.ExcelExporter;
+import scan_virus.ExcelExporter;
 import model.Report;
 import scan_virus.ApiRequestException;
 import scan_virus.ScanVirus;
@@ -16,7 +16,7 @@ public class ApiClass {
             throw new RuntimeException(e);
         }
         Report reports = scanVirus.getReports();
-        model.ExcelExporter excelExporter = new ExcelExporter();
+        ExcelExporter excelExporter = new ExcelExporter();
         excelExporter.exportReportToExcel(reports, "D:/Work/test4.xlsx");
 //        for(Report report : reports){
 //            System.out.println(report.getName() + ": " + report.getResult());

@@ -36,6 +36,16 @@
     -fx-background-color: #43454A;
     -fx-background-radius: 10;
 }
+.button_2:focused{
+    -fx-background-color:  #6B6B6B ;
+    -fx-background-radius:  10
+}
+
+.button_3:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #43454A;
+    -fx-background-radius: 10;
+}
 .button_1:hover {
     -fx-cursor: hand;
     -fx-border-color: #3599EF;

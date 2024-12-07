@@ -27,6 +27,8 @@ public class ScanVirus {
     public Report getReports(){
         return report;
     }
+
+
     public void scanURL(String url) throws ApiRequestException {
         RequestBody requestBody = new FormBody.Builder()
                 .add("url",url)
@@ -45,7 +47,10 @@ public class ScanVirus {
 
                 String id = jsonProcess.getIdFromRespond(response.body().string());
                 System.out.println("ID: " + id);
-                checkScanResult(id);
+                Report newReport = checkScanResult(id);
+                newReport.setName(url);
+                report = newReport;
+                jsonProcess.writeToHistoty(report);
             } else {
                 String errorMesseage = "Request scan failed: " + response.code() + " " + response.message();
                 System.err.println(errorMesseage);
@@ -59,7 +64,7 @@ public class ScanVirus {
         }
     }
 
-    public void checkScanResult(String id) throws ApiRequestException {
+    public Report checkScanResult(String id) throws ApiRequestException {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -74,7 +79,8 @@ public class ScanVirus {
 
         try(Response response = client.newCall(request).execute()){
             if(response.isSuccessful() && response.body() != null){
-               report = jsonProcess.jsonToReport(response.body().string());
+               Report newReport = jsonProcess.jsonToReport(response.body().string());
+               return newReport;
             }else{
                 String errorMesseage = "Request get analyse failed: " + response.code() + " " + response.message();
                 System.err.println(errorMesseage);
@@ -111,12 +117,15 @@ public class ScanVirus {
                 String id = jsonProcess.getIdFromRespond(response.body().string());
                 System.out.println("ID: " + id);
                 try {
-                    Thread.sleep(7000);
+                    Thread.sleep(12000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 
-                checkScanResult(id);  // Gọi phương thức để kiểm tra kết quả phân tích
+                Report newReport = checkScanResult(id);
+                newReport.setName(file.getName());
+                report = newReport;
+                jsonProcess.writeToHistoty(report);
             } else {
                 String errorMesseage = "Request scan failed: " + response.code() + " " + response.message();
                 System.err.println(errorMesseage);
@@ -144,7 +153,10 @@ public class ScanVirus {
             if (response.isSuccessful() && response.body() != null) {
                 // Xử lý phản hồi JSON
                 String jsonResponse = response.body().string();
-                report = jsonProcess.jsonToReport(jsonResponse);
+                Report newReport = jsonProcess.jsonToReport(jsonResponse);
+                newReport.setName(ip);
+                report = newReport;
+                jsonProcess.writeToHistoty(report);
             } else {
                 String errorMesseage = "Request scan failed: " + response.code() + " " + response.message();
                 System.err.println(errorMesseage);
@@ -171,7 +183,10 @@ public class ScanVirus {
             if (response.isSuccessful() && response.body() != null) {
                 // Xử lý phản hồi JSON
                 String jsonResponse = response.body().string();
-                report = jsonProcess.jsonToReport(jsonResponse);
+                Report newReport = jsonProcess.jsonToReport(jsonResponse);
+                newReport.setName(domain);
+                report = newReport;
+                jsonProcess.writeToHistoty(report);
             } else {
                 String errorMesseage = "Request scan failed: " + response.code() + " " + response.message();
                 System.err.println(errorMesseage);
