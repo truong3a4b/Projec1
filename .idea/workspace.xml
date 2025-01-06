@@ -4,8 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e026d37-982f-46b9-a9f8-92af73e16bee" name="Changes" comment="complete 1">
+    <list default="true" id="0e026d37-982f-46b9-a9f8-92af73e16bee" name="Changes" comment="complete1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/history.json" beforeDir="false" afterPath="$PROJECT_DIR$/history.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/ApiClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/ApiClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/HistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/HistoryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ResultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ResultController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UrlController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UrlController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/ResultAnalysis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/ResultAnalysis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Stats.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scan_virus/ApiRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scan_virus/ExcelExporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tools/ExcelExporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scan_virus/JsonProcess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tools/JsonProcess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scan_virus/ScanVirus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tools/ScanVirus.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,34 +64,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ApiClass.executor&quot;: &quot;Run&quot;,
-    &quot;Application.App.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RingProgressWithColor.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.VirusTotal [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.VirusTotal [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/NXTruongdk/Downloads/Projec1-master&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiClass.executor": "Run",
+    "Application.App.executor": "Run",
+    "Application.HelloApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.RingProgressWithColor.executor": "Run",
+    "Maven.VirusTotal [clean].executor": "Run",
+    "Maven.VirusTotal [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/MainWork/VirusTotal",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.App">
     <configuration name="ApiClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test.ApiClass" />
@@ -94,7 +109,7 @@
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.App" />
       <module name="VirusTotal" />
-      <option name="VM_PARAMETERS" value="--module-path D:\Work\javaLib\openjfx-21.0.2_windows-x64_bin-sdk\javafx-sdk-21.0.2\lib --add-modules=javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path D:\Learnnig\javaLib\openjfx-21.0.2_windows-x64_bin-sdk\javafx-sdk-21.0.2\lib --add-modules=javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="main.*" />
@@ -186,7 +201,15 @@
       <workItem from="1733492158239" duration="2013000" />
       <workItem from="1733557462139" duration="3730000" />
       <workItem from="1733561263168" duration="5799000" />
-      <workItem from="1733576124665" duration="418000" />
+      <workItem from="1733576124665" duration="539000" />
+      <workItem from="1733582972634" duration="71000" />
+      <workItem from="1733848406273" duration="334000" />
+      <workItem from="1733927192258" duration="6148000" />
+      <workItem from="1734016567413" duration="2502000" />
+      <workItem from="1734188572781" duration="951000" />
+      <workItem from="1734190773875" duration="870000" />
+      <workItem from="1734254633424" duration="49000" />
+      <workItem from="1736149017680" duration="2105000" />
     </task>
     <task id="LOCAL-00001" summary="new project">
       <option name="closed" value="true" />
@@ -244,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733576168105</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="complete1">
+      <option name="closed" value="true" />
+      <created>1733576641958</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733576641958</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +300,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="80%" />
     <MESSAGE value="complete 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="complete 1" />
+    <MESSAGE value="complete1" />
+    <option name="LAST_COMMIT_MESSAGE" value="complete1" />
   </component>
 </project>

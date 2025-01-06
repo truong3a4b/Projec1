@@ -1,17 +1,19 @@
-package scan_virus; // Khai báo package của lớp ExcelExporter, giúp tổ chức mã nguồn.
+package tools; // Khai báo package của lớp ExcelExporter, giúp tổ chức mã nguồn.
 
 import model.Report;
 import model.ResultAnalysis;
 import org.apache.poi.ss.usermodel.*; // Import các lớp liên quan để làm việc với bảng tính (Workbook, Sheet, Row, Cell,...).
 import org.apache.poi.xssf.usermodel.XSSFWorkbook; // Import lớp dùng để làm việc với định dạng Excel .xlsx.
 
+import java.io.File;
 import java.io.FileOutputStream; // Import lớp để ghi dữ liệu ra file.
 import java.io.IOException; // Import lớp để xử lý ngoại lệ I/O.
 
 public class ExcelExporter { // Định nghĩa lớp ExcelExporter.
 
     // Phương thức tĩnh xuất báo cáo ra file Excel.
-    public  void exportReportToExcel(Report report, String filePath) {
+    private File file;
+    public void exportReportToExcel(Report report, String filePath) {
         Workbook workbook = new XSSFWorkbook(); // Tạo một workbook mới (file Excel) ở định dạng .xlsx.
         Sheet sheet = workbook.createSheet("Report"); // Tạo một sheet mới trong workbook với tên "Report".
 
@@ -64,5 +66,9 @@ public class ExcelExporter { // Định nghĩa lớp ExcelExporter.
                 e.printStackTrace(); // In lỗi ra console.
             }
         }
+    }
+
+    public File getFile() {
+        return file;
     }
 }

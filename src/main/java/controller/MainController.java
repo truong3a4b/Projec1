@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.ResultAnalysis;
-import scan_virus.ScanVirus;
+import tools.ScanVirus;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,8 @@ public class MainController implements Initializable {
     private UrlController urlController;
     private FileController fileController;
     private SearchController searchController;
+    private ResultController resultControllers;
+    private HistoryController historyController;
     Task<Void> scanTask;
     @FXML
     private HBox contentArea;

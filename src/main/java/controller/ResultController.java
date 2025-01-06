@@ -12,24 +12,19 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Report;
 import model.ResultAnalysis;
-import scan_virus.ApiRequestException;
-import scan_virus.ExcelExporter;
-import scan_virus.ScanVirus;
+import tools.ExcelExporter;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ResultController implements Initializable {
@@ -38,6 +33,7 @@ public class ResultController implements Initializable {
     private Report report;
     private ObservableList<ResultAnalysis> results;
     private ExcelExporter excelExporter;
+    private MainController mainController;
 
     @FXML
     private GridPane tableAnalys;
@@ -65,6 +61,15 @@ public class ResultController implements Initializable {
             Label resultLabel1;
             if(results.get(i*2).getResult().equals("null")) resultLabel1 = new Label(results.get(i*2).getCategory());
             else resultLabel1 = new Label(results.get(i*2).getResult());
+            if(resultLabel1.getText().equals("phishing") || resultLabel1.getText().equals("malicious")){
+                resultLabel1.setStyle("-fx-text-fill: #EE2B3C");
+            }else if(resultLabel1.getText().equals("suspicious") || resultLabel1.getText().equals("suspicious")){
+                resultLabel1.setStyle("-fx-text-fill: #FFED2E");
+            }else if(resultLabel1.getText().equals("clean")){
+                resultLabel1.setStyle("-fx-text-fill: #54AB98");
+            }else{
+                resultLabel1.setStyle("-fx-text-fill: #83898F");
+            }
             resultLabel1.getStyleClass().add("result");
             tableAnalys.add(nameLabel1,0,i);
             tableAnalys.add(resultLabel1,1,i);
@@ -79,6 +84,16 @@ public class ResultController implements Initializable {
             if(results.get(i*2).getResult().equals("null")) resultLabel2 = new Label(results.get(i*2+1).getCategory());
             else resultLabel2 = new Label(results.get(i*2+1).getResult());
             resultLabel2.getStyleClass().add("result");
+
+            if(resultLabel2.getText().equals("phishing") || resultLabel2.getText().equals("malicious")){
+                resultLabel2.setStyle("-fx-text-fill: #EE2B3C");
+            }else if(resultLabel2.getText().equals("suspicious") || resultLabel2.getText().equals("suspicious")){
+                resultLabel2.setStyle("-fx-text-fill: #FFED2E");
+            }else if(resultLabel2.getText().equals("clean")){
+                resultLabel2.setStyle("-fx-text-fill: #54AB98");
+            }else{
+                resultLabel2.setStyle("-fx-text-fill: #83898F");
+            }
             tableAnalys.add(nameLabel2,3,i);
             tableAnalys.add(resultLabel2,4,i);
 

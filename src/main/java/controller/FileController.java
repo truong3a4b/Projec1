@@ -2,11 +2,9 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import scan_virus.ApiRequestException;
 
 import java.io.File;
 
@@ -17,7 +15,7 @@ public class FileController {
     @FXML
     private Label fileNameLabel;
 
-    public void chooseFile() {
+    public void chooseFile() throws Exception {
         Stage fileChooserStage = new Stage();
         fileChooserStage.setTitle("File Explorer");
 
@@ -29,8 +27,8 @@ public class FileController {
             if (selectedFile.length() > MAX_FILE_SIZE) {
                 System.out.println("Tệp vượt quá dung lượng cho phép (600 MB)!");
                 try {
-                    throw new ApiRequestException("Tệp vượt quá dung lượng cho phép (600 MB)!");
-                } catch (ApiRequestException e) {
+                    throw new Exception("Tệp vượt quá dung lượng cho phép (600 MB)!");
+                } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Error");

@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.Report;
-import scan_virus.JsonProcess;
+import tools.JsonProcess;
 
 import java.io.IOException;
 import java.net.URL;

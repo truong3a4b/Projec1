@@ -20,4 +20,5 @@ public class Stats {
     public int getMalicious(){
         return malicious;
     }
+    public int getTotal(){return malicious+suspicious+undetected+harmless+timeout+confirmed_timeout+failure+type_unsupported;}
 }

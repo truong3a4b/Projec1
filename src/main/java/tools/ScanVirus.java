@@ -1,12 +1,9 @@
-package scan_virus;
+package tools;
 
 import model.Report;
 import okhttp3.*;
-import model.ResultAnalysis;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class ScanVirus {
@@ -29,7 +26,7 @@ public class ScanVirus {
     }
 
 
-    public void scanURL(String url) throws ApiRequestException {
+    public void scanURL(String url) throws Exception {
         RequestBody requestBody = new FormBody.Builder()
                 .add("url",url)
                 .build();
@@ -57,14 +54,14 @@ public class ScanVirus {
                 if (response.body() != null) {
                     errorMesseage = errorMesseage + "\n" + jsonProcess.getErrorMessage(response.body().string());
                 }
-                throw new ApiRequestException(errorMesseage);
+                throw new Exception(errorMesseage);
             }
         } catch (Exception e) {
-            throw new ApiRequestException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
-    public Report checkScanResult(String id) throws ApiRequestException {
+    private Report checkScanResult(String id) throws Exception {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -87,14 +84,14 @@ public class ScanVirus {
                 if (response.body() != null) {
                     errorMesseage = errorMesseage + "\n" + jsonProcess.getErrorMessage(response.body().string());
                 }
-                throw new ApiRequestException(errorMesseage);
+                throw new Exception(errorMesseage);
             }
         }catch (Exception e){
-            throw new ApiRequestException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
-    public void scanFile(File file) throws ApiRequestException{
+    public void scanFile(File file) throws Exception{
         // Xây dựng MultipartBody để gửi tệp tin
         RequestBody fileBody = RequestBody.create(file, MediaType.parse("application/octet-stream"));
         RequestBody requestBody = new MultipartBody.Builder()
@@ -132,14 +129,14 @@ public class ScanVirus {
                 if (response.body() != null) {
                     errorMesseage = errorMesseage + "\n" + jsonProcess.getErrorMessage(response.body().string());
                 }
-                throw new ApiRequestException(errorMesseage);
+                throw new Exception(errorMesseage);
             }
         } catch (Exception e) {
-            throw new ApiRequestException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
-    public void analyseIP(String ip) throws ApiRequestException{
+    public void analyseIP(String ip) throws Exception{
         String url = "https://www.virustotal.com/api/v3/ip_addresses/" + ip;
 
         Request request = new Request.Builder()
@@ -163,13 +160,13 @@ public class ScanVirus {
                 if (response.body() != null) {
                     errorMesseage = errorMesseage + "\n" + jsonProcess.getErrorMessage(response.body().string());
                 }
-                throw new ApiRequestException(errorMesseage);
+                throw new Exception(errorMesseage);
             }
         } catch (Exception e) {
-            throw new ApiRequestException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
-    public void analyseDomain(String domain) throws ApiRequestException{
+    public void analyseDomain(String domain) throws Exception{
         String url = "https://www.virustotal.com/api/v3/domains/" + domain;
 
         Request request = new Request.Builder()
@@ -193,14 +190,14 @@ public class ScanVirus {
                 if (response.body() != null) {
                     errorMesseage = errorMesseage + "\n" + jsonProcess.getErrorMessage(response.body().string());
                 }
-                throw new ApiRequestException(errorMesseage);
+                throw new Exception(errorMesseage);
             }
         } catch (Exception e) {
-            throw new ApiRequestException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
-    public void scanIpAndDomain(String input) throws ApiRequestException {
+    public void scanIpAndDomain(String input) throws Exception {
         String ipRegex =
                 "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}" +
                         "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";

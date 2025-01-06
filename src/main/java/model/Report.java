@@ -43,7 +43,6 @@ public class Report {
         this.name = name;
     }
 
-
     public String getId() {
         return id;
     }
@@ -52,29 +51,17 @@ public class Report {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public Stats getStats() {
         return stats;
     }
 
-    public void setStats(Stats stats) {
-        this.stats = stats;
-    }
 
     public List<ResultAnalysis> getResults() {
         return results;
     }
 
-    public void setResults(List<ResultAnalysis> results) {
-        this.results = results;
-    }
+
     public String getTime(){
         return time;
     }
